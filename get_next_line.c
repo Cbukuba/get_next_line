@@ -6,27 +6,35 @@
 /*   By: cbukuba <cbukuba@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 19:17:45 by cbukuba           #+#    #+#             */
-/*   Updated: 2021/12/13 22:48:52 by cbukuba          ###   ########.fr       */
+/*   Updated: 2021/12/16 04:01:37 by cbukuba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*-define BUFFER_SIZE =xx dans le Makefile
-  -lire jusque '\n'*/
-
-//#include "get_next_line.h"
-#include <stdlib.h>
-#include <unistd.h>
+#include "get_next_line.h"
 
 char	*get_next_line(int fd)
 {
-	static char	buf[BUFFER_SIZE + 1];
-	//size_t	i;
-	size_t	ret;
-	if (fd == -1)
+	char			buf[BUFFER_SIZE + 1];
+	int				ret;
+	char			*temp;
+	static char		*str = NULL;
+
+	if (fd < 0)
 		return (NULL);
-	ret = read (fd, buf, BUFFER_SIZE);
-	buf[ret] = '\0';
-	return (buf);
+	while (ret > 0)
+	{
+		ret = read(fd, buf, BUFFER_SIZE);
+		if (ret == -1)
+			return (NULL);
+		buf[ret] = '\0';
+		temp = str;
+		str = ft_strjoin(temp, buf);
+		free (temp);
+		if (ft_strchr(str, '\n'))
+			break;
+	}
+	// ft_strtrim(str, '\n');
+	return (str);
 }
 
 #include <sys/types.h>
