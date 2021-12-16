@@ -4,7 +4,6 @@
 # include <stdlib.h>
 # include <stddef.h>
 # include <unistd.h>
-# include <limits.h>
 
 char	*ft_strchr(char const *s, int c);
 char	*ft_strjoin(char const *s1, char const *s2);

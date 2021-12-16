@@ -1,5 +1,15 @@
 #include "get_next_line.h"
 
+size_t	ft_strlen(char const *str)
+{
+	int	c;
+
+	c = 0;
+	while (str[c] != '\0')
+		c ++;
+	return (c);
+}
+
 char	*ft_strchr(char const *s, int c)
 {
 	int		i;

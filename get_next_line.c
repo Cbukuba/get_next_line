@@ -6,7 +6,7 @@
 /*   By: cbukuba <cbukuba@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 19:17:45 by cbukuba           #+#    #+#             */
-/*   Updated: 2021/12/16 04:01:37 by cbukuba          ###   ########.fr       */
+/*   Updated: 2021/12/16 04:28:57 by cbukuba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*get_next_line(int fd)
 {
 	char			buf[BUFFER_SIZE + 1];
-	int				ret;
+	int				ret = BUFFER_SIZE;
 	char			*temp;
 	static char		*str = NULL;
 
