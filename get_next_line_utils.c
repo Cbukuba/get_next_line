@@ -119,3 +119,21 @@ char	*ft_strtrim(char const *s1, char const *set)
 	str[i] = '\0';
 	return (str);
 }
+
+char	*ft_strrchr(const char *s, int c)
+{
+	int		i;
+	char	*str;
+
+	str = (char *)s;
+	i = 0;
+	while (str[i])
+		i ++;
+	while (i >= 0)
+	{
+		if (str[i] == (char)c)
+			return (str + i);
+		i --;
+	}
+	return (NULL);
+}
