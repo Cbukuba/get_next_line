@@ -6,28 +6,28 @@
 /*   By: cbukuba <cbukuba@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 19:17:45 by cbukuba           #+#    #+#             */
-/*   Updated: 2021/12/24 15:05:07 by cbukuba          ###   ########.fr       */
+/*   Updated: 2021/12/24 15:21:51 by cbukuba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
 
-// int	count_line(char *str)
-// {
-// 	int	i;
-// 	int	j;
+int	count_line(char *str)
+{
+	int	i;
+	int	j;
 
-// 	i = 0;
-// 	j = 0;
-// 	while (*str && str[i])
-// 	{
-// 		if (str[i] == '\n')
-// 			j ++;
-// 		i ++;
-// 	}
-// 	return (j);
-// }
+	i = 0;
+	j = 0;
+	while (*str && str[i])
+	{
+		if (str[i] == '\n')
+			j ++;
+		i ++;
+	}
+	return (j);
+}
 
 char	*get_next_line(int fd)
 {
@@ -36,7 +36,6 @@ char	*get_next_line(int fd)
 	static char		*str ="";
 	char			**box;
 	static int		i = -1;
-	// int				line_count = 0;
 
 	ret = 1;
 	while (ret > 0)
@@ -47,34 +46,28 @@ char	*get_next_line(int fd)
 		if (ft_strchr(str, '\n'))
 			break;
 	}
-	// line_count = count_line(str);
-	// printf("%d", line_count);
 	box = ft_split(str, '\n');
-	// if (i < line_count)
-	i ++;
+	if (i <= count_line(str) + 1)
+		i ++;
+	else
+		return (NULL);
 	return (box[i]);
 }
 
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-// int main()
-// {
-// 	int fd;
-// 	fd = open("text.txt", O_RDONLY);
-// 	printf("%s\n", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// }
 int main()
 {
-    int fd;
-    char *line;
-    fd = open("text", O_RDONLY);
-
-    while (line != NULL)
-    {
-        line = get_next_line(fd);
-        printf("--- FINAL LINE = %s\n", line);
-    }
-    return (0);
+	int fd;
+	fd = open("text.txt", O_RDONLY);
+	char *line;
+	// Pourquoi la boucle seule ne fonctionne pas?"
+	line = get_next_line(fd);
+	printf("%s\n", line);
+	while (line != NULL)
+	{
+		line = get_next_line(fd);
+		printf("%s\n", line);
+	}
 }
