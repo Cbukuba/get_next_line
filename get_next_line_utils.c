@@ -217,7 +217,7 @@ static	char	**make_tab(char **tab, char const *s, char c, int word_num)
 
 char	**ft_split(char const *s, char c)
 {
-	char	**tab;
+	char	**tab = NULL;
 	int		len;
 
 	len = word_count(s, c);
@@ -227,4 +227,55 @@ char	**ft_split(char const *s, char c)
 	make_tab(tab, s, c, len);
 	return (tab);
 	free(tab);
+}
+
+char	*ft_strdup(char const *s)
+{
+	int		i;
+	int		lng;
+	char	*p;
+
+	if (!s)
+		return (NULL);
+	lng = 0;
+	while (s[lng] != '\0')
+		lng ++;
+	p = (char *)malloc(sizeof(char) * lng + 1);
+	if (!p)
+		return (NULL);
+	i = 0;
+	while (i < lng)
+	{
+		p[i] = s[i];
+		i ++;
+	}
+	p[i] = '\0';
+	return (p);
+}
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	size_t		i;
+	char		*str;
+	size_t		p;
+
+	i = 0;
+	p = ft_strlen(s);
+	if (p < start)
+	{
+		str = malloc(sizeof(char));
+		if (!str)
+			return (NULL);
+		*str = '\0';
+		return (str);
+	}
+	if (len > p)
+		len = p;
+	str = malloc(sizeof(char) * (len + 1));
+	if (!str)
+		return (NULL);
+	while (i < len)
+		str[i++] = s[start++];
+	str[i] = '\0';
+	return (str);
 }

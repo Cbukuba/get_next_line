@@ -6,14 +6,13 @@
 /*   By: cbukuba <cbukuba@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 19:17:45 by cbukuba           #+#    #+#             */
-/*   Updated: 2021/12/24 15:21:51 by cbukuba          ###   ########.fr       */
+/*   Updated: 2022/01/21 03:06:21 by cbukuba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
-int	count_line(char *str)
+static int	count_line(char *str)
 {
 	int	i;
 	int	j;
@@ -29,45 +28,56 @@ int	count_line(char *str)
 	return (j);
 }
 
+static	char	**free_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i ++;
+	}
+	free (tab);
+}
+
 char	*get_next_line(int fd)
 {
 	char			buf[BUFFER_SIZE + 1];
 	int				ret;
+	char			*line;
 	static char		*str ="";
-	char			**box;
-	static int		i = -1;
 
 	ret = 1;
 	while (ret > 0)
 	{
-		ret = read(fd, buf, BUFFER_SIZE);
+		ret = read(fd, buf, 1);
 		buf[ret] = 0;
 		str = ft_strjoin(str, buf);
 		if (ft_strchr(str, '\n'))
 			break;
 	}
-	box = ft_split(str, '\n');
-	if (i <= count_line(str) + 1)
-		i ++;
-	else
+	line = ft_strdup(str);
+	if (str[ft_strlen(str) - 1] == '\0')
 		return (NULL);
-	return (box[i]);
+	str = str + (ft_strlen(str) + 1);
+	return (line);
 }
 
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <stdio.h>
 int main()
 {
 	int fd;
 	fd = open("text.txt", O_RDONLY);
-	char *line;
-	// Pourquoi la boucle seule ne fonctionne pas?"
-	line = get_next_line(fd);
-	printf("%s\n", line);
+	char *line = "";
+
 	while (line != NULL)
 	{
 		line = get_next_line(fd);
-		printf("%s\n", line);
+		printf("%s", line);
 	}
+	return 0;
 }
