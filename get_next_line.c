@@ -6,7 +6,7 @@
 /*   By: cbukuba <cbukuba@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 19:17:45 by cbukuba           #+#    #+#             */
-/*   Updated: 2022/01/21 03:06:21 by cbukuba          ###   ########.fr       */
+/*   Updated: 2022/01/21 03:16:29 by cbukuba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ char	*get_next_line(int fd)
 	while (ret > 0)
 	{
 		ret = read(fd, buf, 1);
-		buf[ret] = 0;
 		str = ft_strjoin(str, buf);
 		if (ft_strchr(str, '\n'))
 			break;
+		buf[ret] = 0;
 	}
-	line = ft_strdup(str);
-	if (str[ft_strlen(str) - 1] == '\0')
+	if (str[ft_strlen(str)] == '\0')
 		return (NULL);
+	line = ft_strdup(str);
 	str = str + (ft_strlen(str) + 1);
 	return (line);
 }
@@ -77,7 +77,7 @@ int main()
 	while (line != NULL)
 	{
 		line = get_next_line(fd);
-		printf("%s", line);
+		printf("%s\n", line);
 	}
 	return 0;
 }
