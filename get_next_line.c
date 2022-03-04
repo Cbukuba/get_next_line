@@ -6,7 +6,7 @@
 /*   By: cbukuba <cbukuba@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 19:17:45 by cbukuba           #+#    #+#             */
-/*   Updated: 2022/02/11 19:53:49 by cbukuba          ###   ########.fr       */
+/*   Updated: 2022/03/04 05:07:42 by cbukuba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,11 @@ static char	*next_line(char *str)
 	int		i;
 
 	i = 0;
-	while (str[i] != '\n' && str[i] != 0)
+	while (str[i] != '\n' && str[i])
 		i ++;
 	if (str[i] == 0)
 		return (NULL);
 	next_line = ft_substr(str, i + 1, ft_strlen(str) - i);
-	if (next_line[0] == '\0')
-	{
-		free(next_line);
-		return (NULL);
-	}
-	str[i] = 0;
 	return (next_line);
 }
 
@@ -41,13 +35,15 @@ static	char *first_line(char *str)
 	i = 0;
 	if (!str)
 		return (NULL);
-	while (str[i] != '\n' && str[i])
+	while (str && str[i] != '\n' && str[i])
 		i ++;
 	first_line = malloc(sizeof(char) * (i + 1));
 	if (!first_line)
 		return(NULL);
+	// if (str[i] == '\0')
+	// 	return (NULL);
 	i = 0;
-	while ( str && str[i] && str[i] != '\n')
+	while (str && str[i] && str[i] != '\n')
 	{
 		first_line[i] = str[i];
 		i ++;
@@ -95,8 +91,9 @@ int main()
 {
 	int fd;
 	fd = open("text.txt", O_RDONLY);
-	char *line = "";
+	char *line;
 
+	line = ft_strdup("");
 	while (line)
 	 {
 		line = get_next_line(fd);
